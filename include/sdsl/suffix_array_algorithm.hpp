@@ -269,6 +269,7 @@ SDSL_UNUSED typename std::enable_if<t_wt::lex_ordered, csa_tag>::type x = csa_ta
 	typename csa_wt<t_wt, t_dens, t_inv_dens, t_sa_sample_strat, t_isa, t_alphabet_strat>::size_type
 			  size_type;
 	size_type c_begin = csa_fwd.C[csa_fwd.char2comp[c]];
+	// TODO: encapsulate lex_count call
 	auto	  r_s_b   = csa_fwd.wavelet_tree.lex_count(l_fwd, r_fwd + 1, c);
 	size_type rank_l  = std::get<0>(r_s_b);
 	size_type s = std::get<1>(r_s_b), b = std::get<2>(r_s_b);
@@ -598,11 +599,25 @@ typename t_csa::size_type extract(const t_csa&				csa,
 		auto order	= csa.isa[end];
 		text[--steps] = first_row_symbol(order, csa);
 		while (steps != 0) {
+            if (t_csa::implicit_sentinel) {
+                if (order == csa.sentinel_pos) {
+                    order = 0;
+                    text[--steps] = 0;
+                    continue;
+                }
+                order = order - (order > csa.sentinel_pos);
+            }
+            // TODO: encapsulate inverse_select call
 			auto rc		  = csa.wavelet_tree.inverse_select(order);
 			auto j		  = rc.first;
 			auto c		  = rc.second;
-			order		  = csa.C[csa.char2comp[c]] + j;
-			text[--steps] = c;
+			if (t_csa::implicit_sentinel) {
+                order = csa.C[c + 1] + j;
+                text[--steps] = csa.comp2char[c + 1];
+            } else {
+				order = csa.C[csa.char2comp[c]] + j;
+				text[--steps] = c;
+            }
 		}
 	}
 	return end - begin + 1;
