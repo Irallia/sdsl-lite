@@ -51,7 +51,7 @@ class byte_alphabet;
 template <class bit_vector_type   = bit_vector,
 		  class rank_support_type = rank_support_scan<>,
 		  class select_support_type =
-		  select_support_scan<>, 
+		  select_support_scan<>,
 		  class C_array_type = int_vector<>>
 class succinct_byte_alphabet;
 
@@ -198,7 +198,7 @@ public:
         , m_sigma(bas.m_sigma)
     {
     }
-        
+
     byte_alphabet(byte_alphabet&& bas)
         : char2comp(m_char2comp)
         , comp2char(m_comp2char)
