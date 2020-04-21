@@ -50,7 +50,7 @@ template <class t_wt               = wt_huff<>,              // Wavelet tree typ
           class t_isa_sample_strat = isa_sampling<>,         // Policy class for ISA sampling.
           class t_alphabet_strat   =                         // Policy class for the representation of the alphabet.
           typename wt_alphabet_trait<t_wt>::type,
-          bool t_implicit_sentinel = false>                   // Use implicit representation of terminal symbol
+          bool t_implicit_sentinel = false>                  // Use implicit representation of terminal symbol
 class csa_wt {
     static_assert(std::is_same<typename index_tag<t_wt>::type, wt_tag>::value,
                   "First template argument has to be a wavelet tree type.");
@@ -157,21 +157,25 @@ public:
 	//! Constructor taking a cache_config
     csa_wt(cache_config& config)
     {
-        if (!cache_file_exists(key_trait<alphabet_type::int_width>::KEY_BWT, config)) {
+        const char* KEY_TRAIT_BWT = key_bwt_trait<alphabet_type::int_width>::KEY_BWT;
+        if (!cache_file_exists(KEY_TRAIT_BWT, config)) {
             return;
         }
         {
             auto event = memory_monitor::event("construct csa-alpbabet");
-            int_vector_buffer<alphabet_type::int_width> bwt_buf(cache_file_name(key_trait<alphabet_type::int_width>::KEY_BWT,config));
+            int_vector_buffer<alphabet_type::int_width> bwt_buf(cache_file_name(KEY_TRAIT_BWT, config));
             size_type n = bwt_buf.size();
             alphabet_type tmp_alphabet(bwt_buf, n);
-            m_alphabet.swap(tmp_alphabet);
+            {
+                alphabet_type tmp = m_alphabet;
+                m_alphabet = std::move(tmp_alphabet);
+                tmp_alphabet = std::move(tmp);
+            }
         }
         {
             auto event = memory_monitor::event("construct wavelet tree");
-            std::string bwt_file = cache_file_name(key_trait<alphabet_type::int_width>::KEY_BWT,config);
+            std::string bwt_file = cache_file_name(KEY_TRAIT_BWT, config);
             int_vector_buffer<alphabet_type::int_width> bwt_buf(bwt_file);
-            size_type n = bwt_buf.size();
             if (t_implicit_sentinel) {
                 std::string id = "_" + util::to_string(util::pid()) + "_" + util::to_string(util::id());
                 std::string tmp_bwt_file = bwt_file+id;
@@ -184,26 +188,38 @@ public:
                         } else {
                             m_sentinel_pos = i;
                         }
-
                     }
                     if (bwt_buf.size() != tmp_bwt_buf.size()+1) {
-                        std::cerr<<"Warning CSA construction: 0-byte filter did not remove exactly one symbol"<<std::endl;
+                        std::cerr << "Warning CSA construction: 0-byte filter did not remove exactly one symbol"
+                                  << std::endl;
                     }
                 }
                 int_vector_buffer<alphabet_type::int_width> tmp_bwt_buf(tmp_bwt_file);
-                wavelet_tree_type tmp_wt(tmp_bwt_buf, tmp_bwt_buf.size());
-                m_wavelet_tree.swap(tmp_wt);
+                wavelet_tree_type tmp_wt = wavelet_tree_type(tmp_bwt_buf.begin(), tmp_bwt_buf.end());
+                {
+                    t_wt tmp = m_wavelet_tree;
+                    m_wavelet_tree = std::move(tmp_wt);
+                    tmp_wt = std::move(tmp);
+                }
                 tmp_bwt_buf.close();
                 sdsl::remove(tmp_bwt_file);
             } else {
-                wavelet_tree_type tmp_wt(bwt_buf, bwt_buf.size());
-                m_wavelet_tree.swap(tmp_wt);
+                wavelet_tree_type tmp_wt = wavelet_tree_type(bwt_buf.begin(), bwt_buf.end());
+                {
+                    t_wt tmp = m_wavelet_tree;
+                    m_wavelet_tree = std::move(tmp_wt);
+                    tmp_wt = std::move(tmp);
+                }
             }
         }
         {
             auto event = memory_monitor::event("sample SA");
             sa_sample_type tmp_sa_sample(config);
-            m_sa_sample.swap(tmp_sa_sample);
+            {
+                sa_sample_type tmp = m_sa_sample;
+                m_sa_sample = std::move(tmp_sa_sample);
+                tmp_sa_sample = std::move(tmp);
+            }
         }
         {
             auto event = memory_monitor::event("sample ISA");
@@ -231,26 +247,6 @@ public:
          * \sa size
          */
 	bool empty() const { return m_wavelet_tree.empty(); }
-
-    //! Swap method for csa_wt
-    /*! The swap method can be defined in terms of assignment.
-        This requires three assignments, each of which, for a container type, is linear
-        in the container's size. In a sense, then, a.swap(b) is redundant.
-        This implementation guaranties a run-time complexity that is constant rather than linear.
-        \param csa csa_wt to swap.
-
-        Required for the Assignable Conecpt of the STL.
-        */
-    void swap(csa_wt& csa)
-    {
-        if (this != &csa) {
-            m_wavelet_tree.swap(csa.m_wavelet_tree);
-            m_sa_sample.swap(csa.m_sa_sample);
-            util::swap_support(m_isa_sample, csa.m_isa_sample, &m_sa_sample, &(csa.m_sa_sample));
-            m_alphabet.swap(csa.m_alphabet);
-            std::swap(m_sentinel_pos,csa.m_sentinel_pos);
-        }
-    }
 
 	//! Returns a const_iterator to the first element.
 	/*! Required for the STL Container Concept.
