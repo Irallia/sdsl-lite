@@ -3,8 +3,8 @@
 ## Methodology
 
 Explored dimensions:
-  
-  * text type 
+
+  * text type
   * instance size (just adjust the test_case.config file for this)
   * compile options
   * index implementations
@@ -18,7 +18,7 @@ and test cases from the [Pizza&Chili][pz] website.
 
   * [bin](./bin): Contains the executables of the project.
     * `build_idx_*` generates indexes
-    * `query_idx_*` executes the count experiments 
+    * `query_idx_*` executes the count experiments
     * `info_*` outputs the space breakdown of an index.
     * `genpattern` pattern generation from [Pizza&Chili][pz] website.
   * [indexes](./indexes): Contains the generated indexes.
@@ -29,7 +29,7 @@ and test cases from the [Pizza&Chili][pz] website.
 
 	Files included in this archive from the Pizza&Chili website:
 	  * [src/genpatterns.c](./src/genpatterns.c)
-      * [src/run_quries_sdsl.cpp](./src/run_quries_sdsl.cpp) 
+      * [src/run_quries_sdsl.cpp](./src/run_quries_sdsl.cpp)
 	    is a customized version of the Pizza&Chili file run_queries.c .
 
 ## Prerequisites
@@ -39,14 +39,14 @@ and test cases from the [Pizza&Chili][pz] website.
     - [pdflatex][LT] to generate the pdf reports.
   * The construction of the 200MB indexes requires about 1GB
     of RAM.
-		
+
 ## Usage
 
  * `make timing`  compiles the programs, downloads test the
    200MB [Pizza&Chili][pz] test cases, builds the indexes,
    runs the performance tests, and generated a report located at
    `visualize/count.pdf`. The raw numbers of the timings
-   can be found in `results/all.txt`. 
+   can be found in `results/all.txt`.
    Indexes and temporary files are stored in the
    directory `indexes` and `tmp`. For the 5 x 200 MB of
    [Pizza&Chili][pz] data the project will produce about
@@ -60,23 +60,23 @@ and test cases from the [Pizza&Chili][pz] website.
 
 ## Customization of the benchmark
   The project contains several configuration files:
- 
+
   * [index.config](./index.config): Specify data structures'
 			ID, sdsl-class, and LaTeX-name for the report.
-  * [test_case.config](./test_case.config): Specify test cases' 
+  * [test_case.config](./test_case.config): Specify test cases'
 			ID, path, LaTeX-name for the report, and download URL.
-  * [compile_options.config](./compile_options.config): Specify 
+  * [compile_options.config](./compile_options.config): Specify
 			compile options' ID and string.
 
-  Note that the benchmark will execute every combination of your choices. 
+  Note that the benchmark will execute every combination of your choices.
 
   Finally, the visualization can also be configured:
 
-  * [visualize/index-filter.config](./visualize/index-filter.config): 
-	  Specify which indexes should be listed in the report. 
+  * [visualize/index-filter.config](./visualize/index-filter.config):
+	  Specify which indexes should be listed in the report.
 
 [sdsl]: https://github.com/simongog/sdsl "sdsl"
-[pz]: http://pizzachili.di.unipi.it "Pizza&Chili"
+[pz]: http://pizzachili.dcc.uchile.cl "Pizza&Chili"
 [RPJ]: http://www.r-project.org/ "R"
 [LT]: http://www.tug.org/applications/pdftex/ "pdflatex"
 [RES]: https://github.com/simongog/simongog.github.com/raw/master/assets/images/count.pdf "count.pdf"

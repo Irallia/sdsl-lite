@@ -17,17 +17,17 @@ so far we have:
   bitvector [rrr_vector](../include/sdsl/rrr_vector.hpp).
   Operations `access`, `rank`, and `select` are benchmarked on
   different inputs.
-* [wavelet_trees](./wavelet_trees): Evaluates the performance of wavelet trees. 
+* [wavelet_trees](./wavelet_trees): Evaluates the performance of wavelet trees.
 
 You can executed the benchmarks by calling `make timing`
-in the specific subdirectory. 
+in the specific subdirectory.
 Test inputs will be automatically generated or downloaded
-from internet sources, such as the excellent [Pizza&Chili][pz] 
+from internet sources, such as the excellent [Pizza&Chili][pz]
 website, and stored in the [data](./data) directory.
 
 Directory [tmp](./tmp) is used to store temporary files (like
 plain suffix arrays) which are used to generate compressed
-structures. 
+structures.
 
 ## Prerequisites
 
@@ -44,7 +44,7 @@ to easily reproduce the results presented in the paper.
 
 
 Simon Gog, Matthias Petri: _Optimized Succinct Data Structures for Massive Data_. 2013.
-Accepted for publication in Software, Practice and Experience. 
+Accepted for publication in Software, Practice and Experience.
 [Preprint][PP]
 
 
@@ -53,7 +53,7 @@ Accepted for publication in Software, Practice and Experience.
 Simon Gog (simon.gog@gmail.com)
 
 [sdsl]: https://github.com/simongog/sdsl "sdsl"
-[pz]: http://pizzachili.di.unipi.it "Pizza&Chili"
+[pz]: http://pizzachili.dcc.uchile.cl "Pizza&Chili"
 [PP]: http://people.eng.unimelb.edu.au/sgog/optimized.pdf "Preprint"
 [CURL]: http://curl.haxx.se/ "cURL"
 [GZIP]: http://www.gnu.org/software/gzip/ "Gzip Compressor"
