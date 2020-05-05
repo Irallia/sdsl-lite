@@ -1,7 +1,7 @@
 \documentclass[10pt,landscape]{article}
 % next two lines required for sdsl command
-\usepackage[T1]{fontenc} 
-\newcommand{\changefont}[3]{\fontfamily{#1}\fontseries{#2}\fontshape{#3}\selectfont} 
+\usepackage[T1]{fontenc}
+\newcommand{\changefont}[3]{\fontfamily{#1}\fontseries{#2}\fontshape{#3}\selectfont}
 \usepackage{amsfonts}
 
 \usepackage{color}
@@ -10,7 +10,7 @@
 \usepackage{ifthen}
 \usepackage[landscape]{geometry}
 
-\usepackage{amsmath} 
+\usepackage{amsmath}
 \usepackage[colorlinks]{hyperref}
 \usepackage{xcolor}
 
@@ -88,7 +88,7 @@ urlcolor=githublink           % color of external links
 
 % Turn off header and footer
 \pagestyle{empty}
- 
+
 
 % Redefine section commands to use less space
 \makeatletter
@@ -143,7 +143,7 @@ urlcolor=githublink           % color of external links
 
 \newcommand{\sdslgit}{https://github.com/simongog/sdsl-lite/blob/master}
 \newcommand{\sdslgitinc}{\sdslgit/include/sdsl}
-\newcommand{\pizzachili}{http://pizzachili.di.unipi.it/texts.html}
+\newcommand{\pizzachili}{http://pizzachili.dcc.uchile.cl/texts.html}
 \newcommand{\code}[1]{\texttt{#1}}
 
 %\newcommand{\sdsl}{\ensuremath{\mathit{sdsl}}}
@@ -157,7 +157,7 @@ urlcolor=githublink           % color of external links
 \newcommand{\sdslencvector}{\code{enc\_vector}}
 \newcommand{\sdslvlcvector}{\code{vlc\_vector}}
 \newcommand{\sdsldacvector}{\code{dac\_vector}}
-%%% coder 
+%%% coder
 \newcommand{\sdslcodereliasdelta}{\code{coder::elias\_delta}}
 \newcommand{\sdslcodereliasgamma}{\code{coder::elias\_gamma}}
 \newcommand{\sdslcoderfibonacci}{\code{coder::fibonacci}}
@@ -242,12 +242,12 @@ is hyperlinked as part of the section heading.
 We have two types of data structures in \sdsl.
 \emph{Self-contained} and \emph{support}
 structures. A support object \code{s} can extend
-a self-contained object \code{o} (e.g. add functionality), but 
+a self-contained object \code{o} (e.g. add functionality), but
 requires access to \code{o}. Support structures contain
 the substring \code{support} in their class names.
 
 \subsection{Integer Vectors (\href{\sdslgitinc/vectors.hpp}{IV})}
-The core of the library is the class 
+The core of the library is the class
 \href{\sdslgitinc/int_vector.hpp}{\sdslintvector\textless$w$\textgreater}.
 Parameter $w$ corresponds to the fixed length of each
 element in bits.  For $w=8,16,32,64,1$ the length is
@@ -255,12 +255,12 @@ fixed during compile time and the vectors
 correspond to \href{http://www.sgi.com/tech/stl/Vector.html}{\code{std::vector\textless uint$w$\_t\textgreater}}
 resp. \code{std::vector<bool>}.
 If $w=0$ (default) the length can be set during runtime.
-\textit{Constructor:} \sdslintvectorZ\code{($n$,$x$,$\ell$)}, with 
+\textit{Constructor:} \sdslintvectorZ\code{($n$,$x$,$\ell$)}, with
 $n$ equals size, $x$ default integer value, $\ell$ width
 of integer (has no effect for $w>0$).
 
-\textit{Public~methods:} \code{operator[i]}, \code{size()}, \code{width()}, 
-\code{data()}. 
+\textit{Public~methods:} \code{operator[i]}, \code{size()}, \code{width()},
+\code{data()}.
 
 \subsubsection{Manipulating \sdslintvector\textless$w$\textgreater\ \code{v}}
 \settowidth{\MyLen}{\code{set\_random\_bits(v)}\quad}
@@ -275,8 +275,8 @@ of integer (has no effect for $w>0$).
 \code{set\_to\_id(v)}         & Set \code{v[$i$]=$i$} for each $i$.\\
 \code{set\_random\_bits(v)}   & Set elements to random bits. \\
 \code{mod(v,$m$)}            & Set \code{v[$i$]=v[$i$]$\bmod m$} for each $i$.\\
-\code{bit\_compress(v)}       & Gets \code{$x\!=\!\max_i$v[$i$]} and 
-                                      $\ell\!=\!\lceil\log(x\!-\!1)\rceil\!+\!1$  
+\code{bit\_compress(v)}       & Gets \code{$x\!=\!\max_i$v[$i$]} and
+                                      $\ell\!=\!\lceil\log(x\!-\!1)\rceil\!+\!1$
                                       and packs the entries in $\ell$-bit integers.\\
 %									  and call \code{v.width($\ell$)}.\\
 \code{expand\_width(v,$\ell$)} & Expands the width of each integer to
@@ -287,11 +287,11 @@ of integer (has no effect for $w>0$).
 For a vector \code{v}, \href{\sdslgitinc/enc_vector.hpp}{\sdslencvector} stores the
 self-delimiting coded deltas (\code{v[$i\!+\!1$]$-$v[$i$]}). Fast random access is
 achieved by sampling values of \code{v} at rate \code{t\_dens}. Available coder
-are 
+are
 \href{\sdslgitinc/coder_elias_delta.hpp}{\sdslcodereliasdelta},
 \href{\sdslgitinc/coder_elias_gamma.hpp}{\sdslcodereliasgamma},
 and
-\href{\sdslgitinc/coder_fibonacci.hpp}{\sdslcoderfibonacci}. 
+\href{\sdslgitinc/coder_fibonacci.hpp}{\sdslcoderfibonacci}.
 
 Class \href{\sdslgitinc/vlc_vector.hpp}{\sdslvlcvector} stores each
 \code{v[i]} as self-delimiting codeword. Samples at rate
@@ -299,7 +299,7 @@ Class \href{\sdslgitinc/vlc_vector.hpp}{\sdslvlcvector} stores each
 
 Class \href{\sdslgitinc/dac_vector.hpp}{\sdsldacvector} stores
 for each value $x$ the least $(\code{t\_b}-1)$
-significant bits 
+significant bits
 plus a bit which is set if $x\geq 2^{b-1}$. In the latter case,
 the process is repeated with $x'=x/2^{b-1}$.
 
@@ -307,14 +307,14 @@ the process is repeated with $x'=x/2^{b-1}$.
 Representations for a bitvector of length $n$ with $m$ set bits.
 \begin{tabular}{@{}lll@{}}
 \textit{Class}    & \textit{Description}       & \textit{Space}  \\
-\href{\sdslgitinc/int_vector.hpp}{\sdslbitvector} & 
+\href{\sdslgitinc/int_vector.hpp}{\sdslbitvector} &
 plain bitvector            & 64$\lceil n/64\!+\!1\rceil$ \\
 \href{\sdslgitinc/bit_vector_il.hpp}{\sdslbitvectoril} &
 interleaved  bitvector & $\approx n(1+64/K)$  \\
-\href{\sdslgitinc/rrr_vector.hpp}{\sdslrrrvector} & 
+\href{\sdslgitinc/rrr_vector.hpp}{\sdslrrrvector} &
 $H_0$-compressed bitvector & $\approx \lceil \log {n\choose m} \rceil$ \\
 \href{\sdslgitinc/sd_vector.hpp}{\sdslsdvector}  & sparse bitvector
-& $\approx\ m\cdot(2\!+\!\log\frac{n}{m})$ \\	
+& $\approx\ m\cdot(2\!+\!\log\frac{n}{m})$ \\
 \href{\sdslgitinc/hyb_vector.hpp}{\sdslhybvector} & hybrid bitvector &  \\
 \end{tabular}
 \sdslbitvector\ equals \sdslintvector\code{\textless1\textgreater} and
@@ -325,7 +325,7 @@ is therefore dynamic.\\
 Each bitvector can be constructed out of a \sdslbitvector\ object.
 
 \subsection{Rank Supports (\href{\sdslgitinc/rank_support.hpp}{RS})}
-RSs add rank functionality to BV. Methods 
+RSs add rank functionality to BV. Methods
 \code{rank($i$)} and \code{operator($i$)} return the number
 of set bits\footnote{It is also possible to rank \code{0} or
 the patterns \code{10} and \code{01}.} in the prefix $[0..i)$ of the
@@ -370,12 +370,12 @@ in BV for $i\in [1..m]$.
 \href{\sdslgitinc/sd_select_support.hpp}{\sdslselectsupportsd} &
 \sdslsdvector & $64$ & \Order{1} \\
 \end{tabular}
-Call~\code{util::init\_support(sls,bv)}~to initialize \code{sls} 
+Call~\code{util::init\_support(sls,bv)}~to initialize \code{sls}
 to bitvector \code{bv}. Call \code{sls($i$)} to get
-$\code{select(}i\code{)}=\min\{j\mid \code{rank(}j\!+\!1\code{)}=i\}$. 
+$\code{select(}i\code{)}=\min\{j\mid \code{rank(}j\!+\!1\code{)}=i\}$.
 
 \subsection{Wavelet Trees (\href{\sdslgitinc/wavelet_trees.hpp}{WT}=BV+RS+SLS)}
-Wavelet trees represent sequences over byte or integer alphabets of size $\sigma$ 
+Wavelet trees represent sequences over byte or integer alphabets of size $\sigma$
 and consist of a tree of BVs. Rank and select on the sequences is reduced to rank and select on BVs,
 and the runtime is multiplied by a factor in $[H_0,\log\sigma]$.
 \begin{tabular}{@{}llccc@{}}
@@ -392,18 +392,18 @@ and the runtime is multiplied by a factor in $[H_0,\log\sigma]$.
 % TODO: \verb!wt_rlg!
 \end{tabular}
 \textit{Public~types:} \code{value\_type}, \code{size\_type}, and \code{node\_type}
-(if WT is traversable). 
-In the following let $c$ be a symbol, $i$,$j$,$k$, and $q$ integers, 
+(if WT is traversable).
+In the following let $c$ be a symbol, $i$,$j$,$k$, and $q$ integers,
 $v$ a node, and $r$ a range.\\
-\textit{Public~methods:} 
-\code{size()}, 
+\textit{Public~methods:}
+\code{size()},
 \code{operator[$i$]},
 \code{rank($i$,c)},
 \code{select($i$,c)},
 \code{inverse\_select($i$)},
 \code{begin()}, \code{end()}.
 \\
-Traversable WTs provide also: 
+Traversable WTs provide also:
 \code{root()}, \code{is\_leaf($v$)},
 \code{empty($v$)}, \code{size($v$)}, \code{sym($v$)},
 \code{expand($v$)},
@@ -411,14 +411,14 @@ Traversable WTs provide also:
 \code{expand($v$,std::vector<$r$>)},
 \code{bit\_vec($v$)}, \code{seq($v$)}.\\
 \code{lex\_ordered} WTs provide also:
-\code{lex\_count($i$,$j$,$c$)} and 
-\code{lex\_smaller\_count($i$,$c$)}.    
-\sdslwtint\ provides: 
+\code{lex\_count($i$,$j$,$c$)} and
+\code{lex\_smaller\_count($i$,$c$)}.
+\sdslwtint\ provides:
 \code{range\_search\_2d}.\\
 \href{\sdslgitinc/wt_algorithm.hpp}{wt\_algorithm.hpp}
-contains the following generic WT method (let $wt$ be 
+contains the following generic WT method (let $wt$ be
 a WT object):
-\code{intersect($wt$, vector<$r$>)}, 
+\code{intersect($wt$, vector<$r$>)},
 \code{quantile\_freq($wt$,$i$,$j$,$q$)},
 \code{interval\_symbols($wt$,$i$,$j$,$k$,...)},
 \code{symbol\_lte($wt$,$c$)},
@@ -428,7 +428,7 @@ a WT object):
 \subsection{Suffix Arrays (\href{\sdslgitinc/suffix_arrays.hpp}{CSA}=IV+WT)}
 Compressed suffix arrays use CIVs or WTs to represent
 the suffix arrays (SA), its inverse (ISA), BWT, $\Psi$, and
-LF. CSAs can be built over byte and integer alphabets. 
+LF. CSAs can be built over byte and integer alphabets.
 \begin{tabular}{@{}ll@{}}
 \textit{Class}    &\textit{Description} \\
 \href{\sdslgitinc/csa_bitcompressed.hpp}{\sdslcsabitcompressed} &
@@ -437,29 +437,29 @@ Based on SA and ISA stored in a IV.\\
 Based on $\Psi$ stored in a CIV.\\
 \href{\sdslgitinc/csa_wt.hpp}{\sdslcsawt} &
 Based on the BWT stored in a WT.\\
-\end{tabular}	
+\end{tabular}
 \textit{Public~methods:}
-\code{operator[$i$]}, 
+\code{operator[$i$]},
 \code{size()},
 \code{begin()},
 \code{end()}.
 \\
-\textit{Public~members:} 
+\textit{Public~members:}
 \code{isa},
-\code{bwt}, 
-\code{lf}, 
-\code{psi}, 
-\code{text}, 
-\code{L}, 
+\code{bwt},
+\code{lf},
+\code{psi},
+\code{text},
+\code{L},
 \code{F},
 \code{C}, \code{char2comp}, \code{comp2char}, \code{sigma}.\\
-\textit{Policy classes: } alphabet strategy 
+\textit{Policy classes: } alphabet strategy
 (e.g.
 \href{\sdslgitinc/csa_alphabet_strategy.hpp}{\sdslbytealphabetstrategy},
 \href{\sdslgitinc/csa_alphabet_strategy.hpp}{\sdslsuccinctbytealphabetstrategy},
 \href{\sdslgitinc/csa_alphabet_strategy.hpp}{\sdslintalphabetstrategy})
-and SA sampling strategy 
-(e.g. 
+and SA sampling strategy
+(e.g.
  \href{\sdslgitinc/csa_sampling_strategy.hpp}{\sdslsaordersasampling},
  \href{\sdslgitinc/csa_sampling_strategy.hpp}{\sdsltextordersasampling}
 )
@@ -484,15 +484,15 @@ Values stored permuted. CSA needed. \\
 Only depths of CST inner nodes stored.\\
 \href{\sdslgitinc/lcp_support_tree2.hpp}{\sdsllcpsupporttreeII} &
 ~+ large values are sampled using LF.\\
-\end{tabular}	
-\textit{Public~methods:} 
+\end{tabular}
+\textit{Public~methods:}
 \code{operator[$i$]},
 \code{size()},
 \code{begin()},
 \code{end()} \\
 
 \subsection{Balanced Parentheses Supports (\href{\sdslgitinc/bp_support.hpp}{BPS})}
-We represent a sequence of parentheses as a \code{bit\_vector}. 
+We represent a sequence of parentheses as a \code{bit\_vector}.
 An opening/closing parenthesis corresponds to \code{1}/\code{0}.\\
 \begin{tabular}{@{}ll@{}}
 \textit{Class}    &\textit{Description} \\
@@ -509,8 +509,8 @@ Min-max-tree over excess sequence.\\
 bits are counted in the prefix $[0..i]$.}, \code{select($i$)}.
 \\
 
-Call~\code{util::init\_support(bps,bv)}~to initialize a BPS 
-\code{bps} to \code{bit\_vector} \code{bv}. 
+Call~\code{util::init\_support(bps,bv)}~to initialize a BPS
+\code{bps} to \code{bit\_vector} \code{bv}.
 
 
 \subsection{Suffix Trees (\href{\sdslgitinc/suffix_trees.hpp}{CST}=CSA+LCP+BPS)}
@@ -522,19 +522,19 @@ CSTs can be built for byte or integer alphabets.
 \begin{tabular}{@{}p{\the\MyLen}%
                 @{}p{\linewidth-\the\MyLen}@{}}
 
-\textit{Class} & \textit{Description} \\				
+\textit{Class} & \textit{Description} \\
 \href{\sdslgitinc/cst_sada.hpp}{\sdslcstsada} &
 Represents a node as position in BPS. Navigational operations
-are fast (they are directly translated in BPS operations on 
+are fast (they are directly translated in BPS operations on
 the DFS-BPS). Space: $4n\!+\!o(n)\!+\!|CSA|\!+\!|LCP|$ bits.\\
 \href{\sdslgitinc/cst_sct3.hpp}{\sdslcstsctIII} &
 Represents nodes as intervals. Fast construction, but
 slower navigational operations. Space: $3n\!+\!o(n)\!+\!|CSA|\!+\!|LCP|$ \\
 \end{tabular}
-\textit{Public~types:} \code{node\_type}. 
-In the following let $v$ and $w$ be nodes 
-and $i$, $d$, $lb$, $rb$ integers.\\ 
-\textit{Public~methods:} 
+\textit{Public~types:} \code{node\_type}.
+In the following let $v$ and $w$ be nodes
+and $i$, $d$, $lb$, $rb$ integers.\\
+\textit{Public~methods:}
 % CST global information
 \code{size()},
 \code{nodes()},
@@ -555,10 +555,10 @@ and $i$, $d$, $lb$, $rb$ integers.\\
 \code{id($v$)},
 \code{inv\_id($i$)},
 \code{sn($v$)},
-% CST global navigation 
+% CST global navigation
 \code{select\_leaf($i$)},
 \code{node($lb$, $rb$)},
-% CST node navigation 
+% CST node navigation
 \code{parent($v$)},
 \code{sibling($v$)},
 \code{lca($v$, $w$)},
@@ -574,7 +574,7 @@ and $i$, $d$, $lb$, $rb$ integers.\\
 The \href{\sdslgit/tutorial/cst-traversal.cpp}{traversal example}
 shows how to use the DFS-iterator.
 %\textit{Iterators methods:} \code{operator++},
-%\code{visit()}, \code{skip\_subtree()}   	
+%\code{visit()}, \code{skip\_subtree()}
 
 \subsection{Range Min/Max Query (\href{\sdslgitinc/rmq_support.hpp}{RMQ})}
 A RMQ \code{rmq} can be used to determine the position of the miniumum
@@ -586,7 +586,7 @@ Operator \code{operator($i$,$j$)} returns $x=\min\{$r$\mid r\in [i,j] \wedge \mb
 \settowidth{\MidLen}{$4n+o(n)$\quad}
 \begin{tabular}{@{}p{\the\MyLen}%
                 @{}p{\linewidth-\the\MidLen-\the\MyLen}@{}p{\the\MidLen}@{}}
-\textit{Class} & \textit{Space} & \textit{Time} \\				
+\textit{Class} & \textit{Space} & \textit{Time} \\
 \href{\sdslgitinc/rmq_support_sparse_table.hpp}{\sdslrmqsupportsparsetable} &
 $n \log^2 n$ & \Order{1} \\
 \href{\sdslgitinc/rmq_succinct_sada.hpp}{\sdslrmqsuccinctsada} &
@@ -609,7 +609,7 @@ dependent on the value of \code{num\_bytes}:
 \code{num\_bytes=$1$} & byte sequence of length \code{util::file\_size(file)}.\\
 \code{num\_bytes=$2$} & 16-bit word sequence.\\
 \code{num\_bytes=$4$} & 32-bit word sequence.\\
-\code{num\_bytes=$8$} & 64-bit word sequence.\\	
+\code{num\_bytes=$8$} & 64-bit word sequence.\\
 \code{num\_bytes=d} & Parse decimal numbers.\\
 \end{tabular}
 Note: \code{construct} writes/reads data to/from
@@ -621,7 +621,7 @@ at \href{\sdslgit/tutorial/csx-printf.cpp}{this handy tool for an example}.
 \subsection{Configuring construction}
 The locations and names of the intermediate files
 can be configured by a \code{cache\_config} object.
-It is constructed by 
+It is constructed by
 \code{cache\_config(del,tmp\_dir,id, map)}
 where
 \code{del} is a boolean variable which specifies
@@ -630,12 +630,12 @@ if the intermediate files should be deleted after construction,
 the intermediate files should be stored,
 \code{id} is used as part of the file names,
 and \code{map} contains a mapping of keys
-(e.g. \href{\sdslgitinc/config.hpp}{\code{conf::KEY\_BWT}}, 
+(e.g. \href{\sdslgitinc/config.hpp}{\code{conf::KEY\_BWT}},
       \href{\sdslgitinc/config.hpp}{\code{conf::KEY\_SA}},\ldots)
 to file paths.\\
 The \code{cache\_config} parameter extends the construction method to:
 \code{construct(o,file,config,num\_bytes)}.\\
-The following methods (\code{key} is a key string, \code{config} represenet a  
+The following methods (\code{key} is a key string, \code{config} represenet a
 \code{cache\_config} object, and \code{o} a \sdsl\ object) should be handy
 in customized construction processes:\\
 \code{cache\_file\_name(key,config)}\\
@@ -647,7 +647,7 @@ in customized construction processes:\\
 \subsection{Resource requirements}
 \textit{Memory}: The memory peak of CSA and CST construction occurs during the SA
 construction, which is $5$ times the texts size for byte-alphabets
-and inputs $<2$ GiB (see the Figure below for a $200$ MB text) 
+and inputs $<2$ GiB (see the Figure below for a $200$ MB text)
 and $9$ times for larger inputs. For integer
 alphabets the construction takes about twice the space of
 the resulting output.\\
@@ -674,7 +674,7 @@ of \code{file} depends on \code{num\_bytes}; see method \code{construct}.
 
 
 \subsection{Store \sdsl\ structures}
-Use \code{store\_to\_file(o, file)} 
+Use \code{store\_to\_file(o, file)}
 to store an \sdsl\ object \code{o} to \code{file}.
 Object \code{o} can also be serialized
 into a \code{std::ostream}-object \code{out}
@@ -684,8 +684,8 @@ by the call \code{o.serialize(out)}.
 %\code{read\_member($x$,in)}
 
 \subsection{Load \sdsl\ structures}
-Use \code{load\_from\_file(o, file)} to load 
-an \sdsl\ object \code{o}, which is stored in \code{file}. 
+Use \code{load\_from\_file(o, file)} to load
+an \sdsl\ object \code{o}, which is stored in \code{file}.
 Call \code{o.load(in)} reads \code{o} from
 \code{std::istream}-object \code{in}.
 
@@ -717,7 +717,7 @@ More useful methods in the \code{sdsl::util} namespace:
 \code{size\_in\_bytes(o)} returns the space used by an
 \sdsl\ object \code{o}. Call
 \code{write\_structure<JSON\_FORMAT>(o,out)} to get
-a detailed space breakdown written in 
+a detailed space breakdown written in
 \href{http://www.json.org/}{JSON} format to stream \code{out}.
 \code{<HTML\_FORMAT>} will write a HTML page
 (\href{http://simongog.github.io/assets/data/space-vis.html}{like this}),
@@ -749,7 +749,7 @@ and executes them.
 Directory \href{\sdslgit/benachmark}{benchmark}
 contains configurable benchmarks for various
 data structure, like WTs, CSAs/FM-indexes (measuring
-time and space for operations 
+time and space for operations
 \href{\sdslgit/benchmark/indexing_count}{count},
 \href{\sdslgit/benchmark/indexing_locate}{locate}, and
 \href{\sdslgit/benchmark/indexing_extract}{extract}).
@@ -759,7 +759,7 @@ You get the gdb command \code{pv <int\_vector> <idx1> <idx2>},
 which displays the elements of an \sdslintvector\ in the
 range $[\code{idx1},\code{idx2}]$ by appending  the file
 \href{\sdslgit/extras/sdsl.gdb}{sdsl.gdb} to your
-\code{.gdbinit}. 
+\code{.gdbinit}.
 
 %\section{Acknowledgements}
 %Yuta Mori for implementing libdivsufsort, which

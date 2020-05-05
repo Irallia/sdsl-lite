@@ -4,6 +4,7 @@ This directory contains a set of benchmarks for [sdsl][sdsl]
 data structures. Each benchmark is in its own subdirectory and
 so far we have:
 
+* [document_retrieval](./document_retrieval)
 * [indexing_count](./indexing_count): Evaluates the performance
   of count queries on different FM-Indexes/CSAs. Count query
   means _How many times occurs my pattern P in the text T?_
@@ -12,22 +13,26 @@ so far we have:
 * [indexing_locate](./indexing_locate): Evaluates the performance
   of _locate queries_ on different FM-Indexes/CSAs. Locate query
   means _At which positions does pattern P occure in T?_
+* [k2_trees](./k2_trees)
+* [lcp](./lcp)
 * [rrr_vector](./rrr_vector): Evaluates the performance of
   the ![H_0](http://latex.codecogs.com/gif.latex?H_0)-compressed
   bitvector [rrr_vector](../include/sdsl/rrr_vector.hpp).
   Operations `access`, `rank`, and `select` are benchmarked on
   different inputs.
-* [wavelet_trees](./wavelet_trees): Evaluates the performance of wavelet trees. 
+* [self_delimiting_codes](./self_delimiting_codes)
+* [suffix_trees](./suffix_trees)
+* [wavelet_trees](./wavelet_trees): Evaluates the performance of wavelet trees.
 
 You can executed the benchmarks by calling `make timing`
-in the specific subdirectory. 
+in the specific subdirectory.
 Test inputs will be automatically generated or downloaded
-from internet sources, such as the excellent [Pizza&Chili][pz] 
+from internet sources, such as the excellent [Pizza&Chili][pz]
 website, and stored in the [data](./data) directory.
 
 Directory [tmp](./tmp) is used to store temporary files (like
 plain suffix arrays) which are used to generate compressed
-structures. 
+structures.
 
 ## Prerequisites
 
@@ -44,7 +49,7 @@ to easily reproduce the results presented in the paper.
 
 
 Simon Gog, Matthias Petri: _Optimized Succinct Data Structures for Massive Data_. 2013.
-Accepted for publication in Software, Practice and Experience. 
+Accepted for publication in Software, Practice and Experience.
 [Preprint][PP]
 
 
@@ -53,7 +58,7 @@ Accepted for publication in Software, Practice and Experience.
 Simon Gog (simon.gog@gmail.com)
 
 [sdsl]: https://github.com/simongog/sdsl "sdsl"
-[pz]: http://pizzachili.di.unipi.it "Pizza&Chili"
+[pz]: http://pizzachili.dcc.uchile.cl "Pizza&Chili"
 [PP]: http://people.eng.unimelb.edu.au/sgog/optimized.pdf "Preprint"
 [CURL]: http://curl.haxx.se/ "cURL"
 [GZIP]: http://www.gnu.org/software/gzip/ "Gzip Compressor"
