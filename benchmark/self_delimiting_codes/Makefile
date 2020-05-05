@@ -1,4 +1,7 @@
 include ../../Make.helper
+
+INC_DIR = ../../include
+
 SRC_DIR = src
 BIN_DIR = bin
 LIBS =
@@ -38,7 +41,7 @@ $(BIN_DIR)/sdcbenchmark: $(SRC_DIR)/sdc_benchmark.cpp vectors.config compile_opt
 	@echo "Writing Vector Assignment Table"
 	@echo "vector;sdsltype" > $(VAT_FILE)
 	@echo "$(V_ASSIGNMENTTABLE)" >> $(VAT_FILE)
-	
+
 
 #execution and creation of test case table
 $(RES_FILE):	test_case.config $(TC_FILES) $(BIN_DIR)/sdcbenchmark
@@ -50,8 +53,8 @@ $(RES_FILE):	test_case.config $(TC_FILES) $(BIN_DIR)/sdcbenchmark
 	@$(BIN_DIR)/sdcbenchmark $(ARGS) | tee $(RES_FILE)
 	$(eval TC_TABLE := $(subst $(space),\n,$(strip $(call config_column,test_case.config,3))))
 	@echo "Writing Test Case file"
-	@echo "testcase\\nOverall" > $(TC_FILE)	
-	@echo "$(TC_TABLE)" >> $(TC_FILE)		
+	@echo "testcase\\nOverall" > $(TC_FILE)
+	@echo "$(TC_TABLE)" >> $(TC_FILE)
 
 include ../Make.download
 

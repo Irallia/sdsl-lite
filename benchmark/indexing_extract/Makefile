@@ -1,6 +1,9 @@
 include ../Make.helper
-CFLAGS = $(MY_CXX_FLAGS) $(MY_CXX_OPT_FLAGS) 
-LIBS = -ldivsufsort -ldivsufsort64
+
+INC_DIR = ../../include
+
+CFLAGS = $(MY_CXX_FLAGS) $(MY_CXX_OPT_FLAGS)
+# LIBS = -ldivsufsort -ldivsufsort64
 SRC_DIR = src
 TMP_DIR = ../tmp
 IVL_DIR = intervals
@@ -33,7 +36,7 @@ COMP_FILES  = $(addsuffix .z.info,$(TC_PATHS))
 
 all: $(BUILD_EXECS) $(QUERY_EXECS) $(INFO_EXECS)
 
-info: $(INFO_EXECS) $(INFO_FILES) 
+info: $(INFO_EXECS) $(INFO_FILES)
 
 indexes: $(INDEXES)
 
@@ -49,9 +52,9 @@ timing: input $(INDEXES) intervals $(TIME_FILES) compression info
 
 # results/[TC_ID].[IDX_ID].[SAMPLE_ID]
 results/%: $(BUILD_EXECS) $(QUERY_EXECS) $(PATTERNS) $(INDEXES)
-	$(eval TC_ID:=$(call dim,1,$*)) 
-	$(eval IDX_ID:=$(call dim,2,$*)) 
-	$(eval SAMPLE_ID:=$(call dim,3,$*)) 
+	$(eval TC_ID:=$(call dim,1,$*))
+	$(eval IDX_ID:=$(call dim,2,$*))
+	$(eval SAMPLE_ID:=$(call dim,3,$*))
 	$(eval TC_NAME:=$(call config_select,test_case.config,$(TC_ID),3))
 	$(eval S_SA:=$(call config_select,sample.config,$(SAMPLE_ID),2))
 	$(eval S_ISA:=$(call config_select,sample.config,$(SAMPLE_ID),3))
@@ -63,13 +66,13 @@ results/%: $(BUILD_EXECS) $(QUERY_EXECS) $(PATTERNS) $(INDEXES)
 	@echo "# S_ISA = $(S_ISA)" >> $@
 	@echo "Run timing for $(IDX_ID).$(SAMPLE_ID) on $(TC_ID)"
 	@$(BIN_DIR)/query_idx_$(IDX_ID).$(SAMPLE_ID) \
-		indexes/$(TC_ID) E < $(IVL_DIR)/$(TC_ID).interval 2>> $@ 
- 
+		indexes/$(TC_ID) E < $(IVL_DIR)/$(TC_ID).interval 2>> $@
+
 
 # indexes/[TC_ID].[IDX_ID].[SAMPLE_ID]
 indexes/%: $(BUILD_EXECS)
-	$(eval TC_ID:=$(call dim,1,$*)) 
-	$(eval IDX_ID:=$(call dim,2,$*)) 
+	$(eval TC_ID:=$(call dim,1,$*))
+	$(eval IDX_ID:=$(call dim,2,$*))
 	$(eval SAMPLE_ID:=$(call dim,3,$*))
 	$(eval TC:=$(call config_select,test_case.config,$(TC_ID),2))
 	@echo "Building index $(IDX_ID).$(SAMPLE_ID) on $(TC)"
@@ -77,11 +80,11 @@ indexes/%: $(BUILD_EXECS)
 
 # info/[TC_ID].[IDX_ID].[SAMPLE_ID]
 info/%.json: $(INDEXES)
-	$(eval TC_ID:=$(call dim,1,$*)) 
-	$(eval IDX_ID:=$(call dim,2,$*)) 
-	$(eval SAMPLE_ID:=$(call dim,3,$*)) 
+	$(eval TC_ID:=$(call dim,1,$*))
+	$(eval IDX_ID:=$(call dim,2,$*))
+	$(eval SAMPLE_ID:=$(call dim,3,$*))
 	@echo "Generating info for $(IDX_ID) on $(TC_ID)"
-	$(BIN_DIR)/info_$(IDX_ID).$(SAMPLE_ID) indexes/$(TC_ID).$(IDX_ID).$(SAMPLE_ID) > $@ 
+	$(BIN_DIR)/info_$(IDX_ID).$(SAMPLE_ID) indexes/$(TC_ID).$(IDX_ID).$(SAMPLE_ID) > $@
 
 # $(IVL_DIR)/[TC_ID].interval
 $(IVL_DIR)/%.interval: $(BIN_DIR)/genintervals
@@ -91,13 +94,13 @@ $(IVL_DIR)/%.interval: $(BIN_DIR)/genintervals
 
 $(BIN_DIR)/genintervals: $(SRC_DIR)/genintervals.c
 	@echo "Build interval generation program"
-	@$(MY_CC) -O3 -o $@ $(SRC_DIR)/genintervals.c 
+	@$(MY_CC) -O3 -o $@ $(SRC_DIR)/genintervals.c
 
 
 # $(BIN_DIR)/build_idx_[IDX_ID].[SAMPLE_ID]
 $(BIN_DIR)/build_idx_%: $(SRC_DIR)/build_index_sdsl.cpp index.config sample.config
-	$(eval IDX_ID:=$(call dim,1,$*)) 
-	$(eval SAMPLE_ID:=$(call dim,2,$*)) 
+	$(eval IDX_ID:=$(call dim,1,$*))
+	$(eval SAMPLE_ID:=$(call dim,2,$*))
 	$(eval IDX_TYPE:=$(call config_select,index.config,$(IDX_ID),2))
 	$(eval S_SA:=$(call config_select,sample.config,$(SAMPLE_ID),2))
 	$(eval S_ISA:=$(call config_select,sample.config,$(SAMPLE_ID),3))
@@ -111,8 +114,8 @@ $(BIN_DIR)/build_idx_%: $(SRC_DIR)/build_index_sdsl.cpp index.config sample.conf
 
 # Targets for the count experiment. $(BIN_DIR)/count_queries_[IDX_ID].[SAMPLE_ID]
 $(BIN_DIR)/query_idx_%: $(SRC_DIR)/run_queries_sdsl.cpp index.config sample.config
-	$(eval IDX_ID:=$(call dim,1,$*)) 
-	$(eval SAMPLE_ID:=$(call dim,2,$*)) 
+	$(eval IDX_ID:=$(call dim,1,$*))
+	$(eval SAMPLE_ID:=$(call dim,2,$*))
 	$(eval IDX_TYPE:=$(call config_select,index.config,$(IDX_ID),2))
 	$(eval S_SA:=$(call config_select,sample.config,$(SAMPLE_ID),2))
 	$(eval S_ISA:=$(call config_select,sample.config,$(SAMPLE_ID),3))
@@ -124,9 +127,9 @@ $(BIN_DIR)/query_idx_%: $(SRC_DIR)/run_queries_sdsl.cpp index.config sample.conf
 			         -I$(INC_DIR) -o $@ $(LIBS)
 
 # Targets for the info executable. $(BIN_DIR)/info_[IDX_ID].[SAMPLE_ID]
-$(BIN_DIR)/info_%: $(SRC_DIR)/info.cpp index.config 
-	$(eval IDX_ID:=$(call dim,1,$*)) 
-	$(eval SAMPLE_ID:=$(call dim,2,$*)) 
+$(BIN_DIR)/info_%: $(SRC_DIR)/info.cpp index.config
+	$(eval IDX_ID:=$(call dim,1,$*))
+	$(eval SAMPLE_ID:=$(call dim,2,$*))
 	$(eval IDX_TYPE:=$(call config_select,index.config,$(IDX_ID),2))
 	$(eval S_SA:=$(call config_select,sample.config,$(SAMPLE_ID),2))
 	$(eval S_ISA:=$(call config_select,sample.config,$(SAMPLE_ID),3))
@@ -148,12 +151,12 @@ clean:
 	@rm -f $(QUERY_EXECS) $(BUILD_EXECS) $(INFO_EXECS) \
 		   $(BIN_DIR)/genintervals
 
-cleanresults: 
+cleanresults:
 	@echo "Remove result files"
 	@rm -f $(TIME_FILES) $(RESULT_FILE)
 
 cleanall: clean cleanresults
 	@echo "Remove all generated files."
 	@rm -f $(INDEXES) $(INFO_FILES) $(PATTERNS)
-	@rm -f $(TMP_DIR)/* 
+	@rm -f $(TMP_DIR)/*
 	@rm -f $(INTERVALS)

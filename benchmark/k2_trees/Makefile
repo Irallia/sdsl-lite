@@ -1,4 +1,7 @@
 include ../../Make.helper
+
+INC_DIR = ../../include
+
 CFLAGS = $(MY_CXX_FLAGS)
 SRC_DIR = src
 BIN_DIR = bin
@@ -74,7 +77,8 @@ $(BIN_DIR)/gen_k2_%: $(SRC_DIR)/gen_k2t.cpp
 	$(eval K2_ID:=$(call dim,1,$*))
 	$(eval K2_TYPE:=$(call config_select,k2tree.config,$(K2_ID),2))
 	@$(MY_CXX) $(CFLAGS) $(C_OPTIONS) -DK2_TYPE="$(K2_TYPE)" -L$(LIB_DIR)\
-		$(SRC_DIR)/gen_k2t.cpp -I$(INC_DIR) -o $@ $(LIBS) -ldivsufsort -ldivsufsort64
+		$(SRC_DIR)/gen_k2t.cpp -I$(INC_DIR) -o $@ $(LIBS)
+		# $(SRC_DIR)/gen_k2t.cpp -I$(INC_DIR) -o $@ $(LIBS) -ldivsufsort -ldivsufsort64
 
 include ../Make.download
 

@@ -1,5 +1,8 @@
 include ../Make.helper
-LIBS=-ldivsufsort -ldivsufsort64
+
+INC_DIR = ../../include
+
+# LIBS=-ldivsufsort -ldivsufsort64
 SRC_DIR=src
 TMP_DIR=../tmp
 
